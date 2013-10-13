@@ -20,3 +20,12 @@ Specifically, lumberjack is designed to:
  * explicitly support existing tools such as `GruntJS <http://gruntjs.com>`_ and `Bower <http://bower.io>`_ (no need to re-invent the wheel here Python people, the JS folks got this down to a science!)
  * be fast (like already mynt is, for example). Rendering a typical site should never take longer than 1s.
  * *complete* separation of content and theme
+
+
+Design
+------
+
+ * each node can have (YAML) meta data by providing a ``*.meta`` file
+ * accordingly, ``.meta`` contains the meta data for a directory
+ * ``.meta`` properties are inherited by default
+ * properties that are not supposed to be inherited need to be put into a ``local`` section

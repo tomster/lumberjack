@@ -17,6 +17,7 @@ setup(name=name,
     extras_require={
         'development': [
             'flake8',
+            'py >= 1.4.17',
             'pytest >= 2.4.2',
             'pytest-flakes',
             'pytest-pep8',

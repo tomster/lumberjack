@@ -3,9 +3,9 @@ language:
 python:
   - "2.7"
 install:
-  - python setup.py dev
+  - make
 script:
-  - py.test --tb=native
+  - make tests
 notifications:
   irc:
     - "irc.freenode.org#pyfidelity"

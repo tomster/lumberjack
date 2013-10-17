@@ -1,12 +1,16 @@
-# convenience makefile to set up development
+# convenience makefile to set up development and run tests
 
 version = 2.7
 
-bin/pserve bin/py.test: bin/python bin/pip setup.py
-	bin/python setup.py dev
+bin/py.test: bin/buildout buildout.cfg
+	bin/buildout
+	touch bin/py.test
 
 tests: bin/py.test
-	bin/py.test
+	bin/py.test --cov lumberjack --tb=native
+
+bin/buildout: bin/pip
+	bin/pip install zc.buildout
 
 bin/python bin/pip:
 	virtualenv-$(version) .

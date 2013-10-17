@@ -29,3 +29,11 @@ Design
  * accordingly, ``.meta`` contains the meta data for a directory
  * ``.meta`` properties are inherited by default
  * properties that are not supposed to be inherited need to be put into a ``local`` section
+
+
+|TravisStatus|
+
+.. |TravisStatus| image:: https://travis-ci.org/tomster/lumberjack.png
+.. _TravisStatus: https://travis-ci.org/tomster/lumberjack
+
+

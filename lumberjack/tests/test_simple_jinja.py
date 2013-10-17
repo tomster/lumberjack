@@ -1,15 +1,19 @@
 from pytest import fixture
-from lumberjack.walker import parse_source
+from libstasis.walker import Walker
+from lumberjack.core import factory
 from lumberjack.renderer import render_site
 
 
 @fixture
 def site(simple_jinja):
-    return parse_source(simple_jinja['source'])
+    site = factory(dict(title=u'foo'), simple_jinja['source'])
+    walker = Walker()
+    walker.walk(site)
+    return site
 
 
 def test_parse(site):
-    assert site['root']['index.html'].filename == 'index.html'
+    assert site['entities'].query('filename')[0].filename == 'index.html'
 
 
 def test_render(site, simple_jinja):

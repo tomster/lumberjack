@@ -13,6 +13,7 @@ setup(name=name,
         'docopt >= 0.6.1',
         'PyYAML',
         'Jinja2 >= 2.7',
+        'libstasis',
     ],
     extras_require={
         'development': [

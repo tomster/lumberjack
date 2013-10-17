@@ -4,9 +4,9 @@ from shutil import copy2
 from .utils import strip_root
 
 
-def render_site(site, fs_source, fs_destination, fs_templates, config):
+def render_site(site, fs_content, fs_destination, fs_templates, config):
     print "Writing to %s" % fs_destination
-    env = Environment(loader=FileSystemLoader([fs_templates, fs_source]))
+    env = Environment(loader=FileSystemLoader([fs_templates, fs_content]))
     for item in site['root'].values():
         fs_item_dir = path.join(fs_destination, strip_root(item.path))
         if not path.exists(fs_item_dir):
@@ -20,3 +20,4 @@ def render_site(site, fs_source, fs_destination, fs_templates, config):
 
         else:
             copy2(item.fs_src, fs_item_destination)
+    return fs_destination

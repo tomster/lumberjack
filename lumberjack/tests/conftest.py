@@ -11,6 +11,9 @@ def examples():
 
 @fixture
 def simple_jinja(tmpdir, examples):
-    destination = tmpdir.join('simple_jinja')
-    copytree(path.join(examples, 'simple_jinja'), '%s' % destination)
-    return destination
+    location = tmpdir.join('simple_jinja')
+    copytree(path.join(examples, 'simple_jinja'), '%s' % location)
+    return dict(location=location,
+        source=str(location.join('content')),
+        templates=str(location.join('templates')),
+        destination=str(location.join('build')),)

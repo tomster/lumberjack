@@ -1,18 +1,9 @@
-import yaml
-
 from docopt import docopt
 from pkg_resources import get_distribution
 
-from .utils import abspath
+from .utils import abspath, parse_config
 from .walker import parse_source
 from .renderer import render_site
-
-
-def parse_config(fs_conf):
-    """ Parse the given YAML file and return its contents as dictionary
-    """
-    with open(fs_conf) as config:
-        return yaml.load(config.read())
 
 
 def main():

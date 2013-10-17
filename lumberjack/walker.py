@@ -15,12 +15,14 @@ def parse_source(fs_location):
     """ parse the given directory. Returns an instance of (potentially nested) OrderedDict
     with each entry describing its node.
     """
+    print "Reading from %s" % fs_location
     site = OrderedDict(root=OrderedDict())
     current = site['root']
     for root, dirs, items in walk(fs_location, followlinks=True):
         for item in items:
+            path = root.replace(fs_location, '')
             current[item] = Item(fs_src=abspath(root, item),
-                path=root.lstrip(fs_location),
+                path=path,
                 filename=item)
 
     return site

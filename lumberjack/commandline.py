@@ -2,8 +2,8 @@ import yaml
 
 from docopt import docopt
 from pkg_resources import get_distribution
-from os.path import expanduser
 
+from .utils import abspath
 from .walker import parse_source
 from .renderer import render_site
 
@@ -28,11 +28,14 @@ Options:
     """
 
     arguments = docopt(main.__doc__, help=True, version=get_distribution('lumberjack').version)
+
+    # normalize path arguments
     for location in ['--config', '--source', '--destination']:
-        arguments[location] = expanduser(arguments[location])
+        arguments[location] = abspath(arguments[location])
 
     config = parse_config(arguments['--config'])
     site = parse_source(arguments['--source'])
     render_site(site=site, fs_source=arguments['--source'], fs_destination=arguments['--destination'],
         fs_templates=arguments['--templates'],
         config=config)
+    print "Done."

@@ -13,7 +13,7 @@ def site(simple_jinja):
 
 
 def test_parse(site):
-    assert site['entities'].query('filename')[0].filename == 'index.html'
+    assert site['entities'].query('filename')[0].filename.value == 'index.html'
 
 
 def test_render(site, simple_jinja):

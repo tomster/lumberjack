@@ -39,5 +39,8 @@ class AspectsForFile(object):
             return path.split(self.file.subpath)[1]
         raise KeyError(aspect)
 
-    def __iter__(self):
+    def keys(self):
         return iter(['filepath', 'subpath', 'filename'])
+
+    def __iter__(self):
+        return iter(self.keys())

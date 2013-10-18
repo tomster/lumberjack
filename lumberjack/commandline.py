@@ -31,7 +31,6 @@ Options:
 
     walker = Walker()
     walker.walk(site)
-    # site = parse_source(arguments['--content'])
     render_site(site=site, fs_content=arguments['--content'], fs_destination=arguments['--destination'],
         fs_templates=arguments['--templates'],
         config=site['config'])

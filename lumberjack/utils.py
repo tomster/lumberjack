@@ -1,4 +1,13 @@
 import yaml
+from os.path import expanduser, realpath, join
+
+
+def abspath(*args):
+    return realpath(
+        expanduser(
+            join(*args)
+        )
+    )
 
 
 def parse_config(fs_conf):

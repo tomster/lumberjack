@@ -1,6 +1,7 @@
 from libstasis.entities import IAspects
 from libstasis.entities import Entities
 from libstasis.entities import Column, types
+from libstasis.rst import AspectsForRstFile, RstFile
 from libstasis.walker import File
 from zope.interface.registry import Components
 from zope.interface import implements
@@ -16,6 +17,7 @@ def factory(config, path):
     site['config'] = config
     site['path'] = path
     site.registerAdapter(AspectsForFile, (File,), IAspects)
+    site.registerAdapter(AspectsForRstFile, (RstFile,), IAspects)
     entities = Entities(registry=site)
     entities.add_aspect('filepath', Column('value', types.Unicode))
     entities.add_aspect('subpath', Column('value', types.Unicode))

@@ -14,6 +14,7 @@ setup(name=name,
         'PyYAML',
         'Jinja2 >= 2.7',
         'libstasis',
+        'docutils',
     ],
     extras_require={
         'development': [

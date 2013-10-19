@@ -1,9 +1,10 @@
 # convenience makefile to set up development and run tests
 
 version = 2.7
+config = buildout.cfg
 
 bin/py.test: bin/buildout buildout.cfg
-	bin/buildout
+	bin/buildout -c $(config)
 	touch bin/py.test
 
 tests: bin/py.test

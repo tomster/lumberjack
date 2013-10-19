@@ -3,7 +3,7 @@ language:
 python:
   - "2.7"
 install:
-  - make
+  - make config=travis.cfg
 script:
   - make tests
 notifications:

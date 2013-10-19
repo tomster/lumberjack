@@ -24,5 +24,3 @@ def site(example):
     walker = Walker()
     walker.walk(site)
     return site
-
-

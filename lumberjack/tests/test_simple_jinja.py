@@ -1,13 +1,13 @@
 from lumberjack.renderer import render_site
-from lumberjack.testing import site_dir
+from lumberjack.testing import example_dir
 
 
-@site_dir('simple_jinja')
+@example_dir('simple_jinja')
 def test_parse(site):
     assert site['entities'].query('filename')[0].filename.value == 'index.html'
 
 
-@site_dir('simple_jinja')
+@example_dir('simple_jinja')
 def test_render(site, example):
     render_site(site,
         fs_content=example['source'],

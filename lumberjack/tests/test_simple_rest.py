@@ -1,14 +1,14 @@
 from pytest import xfail
 from lumberjack.renderer import render_site
-from lumberjack.testing import site_dir
+from lumberjack.testing import example_dir
 
 
-@site_dir('simple_rest')
+@example_dir('simple_rest')
 def test_parse(site):
     assert site['entities'].query('filename')[0].filename.value == 'index.rst'
 
 
-@site_dir('simple_rest')
+@example_dir('simple_rest')
 def test_render(site, example):
     xfail('not yet implemented')
     render_site(site,

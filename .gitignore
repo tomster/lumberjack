@@ -4,4 +4,11 @@
 /.cache
 /.coverage
 /htmlcov
-
+/.Python
+/.installed.cfg
+/.mr.developer.cfg
+/develop-eggs/
+/eggs/
+/lumberjack.egg-info/
+*.pyc
+/src/

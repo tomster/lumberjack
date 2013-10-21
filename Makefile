@@ -1,8 +1,11 @@
 # convenience makefile to set up development and run tests
 
-version = 2.7
 config = buildout.cfg
 
+dir = lib/python2.7/site-packages
+venv = $(dir)/virtualenv
+
+# set up a virtual env with a bare OSX python installation (w/o `virtualenv`)
 bin/py.test: bin/buildout buildout.cfg
 	bin/buildout -c $(config)
 	touch bin/py.test
@@ -13,8 +16,14 @@ tests: bin/py.test
 bin/buildout: bin/pip
 	bin/pip install zc.buildout
 
-bin/python bin/pip:
-	virtualenv-$(version) .
+bin/pip: $(venv)
+	$(dir)/virtualenv -p `which python` .
+
+$(venv): $(dir)
+	PYTHONPATH=$(dir) easy_install -d $(dir) virtualenv
+
+$(dir):
+	mkdir -p $@
 
 clean:
 	git clean -fXd

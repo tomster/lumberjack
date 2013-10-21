@@ -8,7 +8,6 @@ venv = $(dir)/virtualenv
 # set up a virtual env with a bare OSX python installation (w/o `virtualenv`)
 bin/py.test: bin/buildout buildout.cfg
 	bin/buildout -c $(config)
-	touch bin/py.test
 
 tests: bin/py.test
 	bin/py.test --cov lumberjack --tb=native
@@ -19,11 +18,9 @@ bin/buildout: bin/pip
 bin/pip: $(venv)
 	$(dir)/virtualenv -p `which python` .
 
-$(venv): $(dir)
+$(venv):
+	mkdir -p $(dir)
 	PYTHONPATH=$(dir) easy_install -d $(dir) virtualenv
-
-$(dir):
-	mkdir -p $@
 
 clean:
 	git clean -fXd

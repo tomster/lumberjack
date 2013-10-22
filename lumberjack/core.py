@@ -1,15 +1,11 @@
+from libstasis import Registry
 from libstasis.entities import IAspects
 from libstasis.entities import Entities
 from libstasis.entities import Column, types
 from libstasis.rst import AspectsForRstFile, RstFile
 from libstasis.walker import File
-from zope.interface.registry import Components
 from zope.interface import implements
 from os import path
-
-
-class Registry(Components, dict):
-    """ convenience mixin """
 
 
 def factory(config, path):

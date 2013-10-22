@@ -49,6 +49,7 @@ class AspectsForFile(propdict):
         """
         return path.join(self.basepath, self.subpath)
 
-    def __init__(self, file):
-        self.update(file.__dict__)
+    def __init__(self, file=None):
+        if file is not None:
+            self.update(file.__dict__)
         self.title = u'Welcome'

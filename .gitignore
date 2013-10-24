@@ -12,3 +12,4 @@
 /lumberjack.egg-info/
 *.pyc
 /src/
+/build/

@@ -24,6 +24,11 @@ def factory(config, path):
     entities.add_aspect('filename', Column('value', types.Unicode))
     # General meta data
     entities.add_aspect('title', Column('value', types.Unicode))
+    entities.add_aspect('metadata',
+        Column('author', types.Unicode),
+        Column('date', types.DateTime),
+        Column('tags', types.Unicode),
+    )
     # ReST aspects TODO: factor into module?
     site['entities'] = entities
     return site

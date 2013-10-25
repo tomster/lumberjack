@@ -1,3 +1,4 @@
+from datetime import datetime
 from pytest import xfail
 from lumberjack.renderer import render_site
 from lumberjack.testing import example_dir
@@ -10,7 +11,10 @@ def test_parse(site):
 
 @example_dir('simple_rest')
 def test_parse_rest_metadata(site):
-    assert site['entities'].query('title')[0].title.value == 'Welcome'
+    result = site['entities'].query('title', 'metadata')[0]
+    assert result.title.value == u'Welcome'
+    assert result.metadata.author == u'biggles'
+    assert result.metadata.date == datetime(2013, 10, 19, 16, 16)
 
 
 @example_dir('simple_rest')

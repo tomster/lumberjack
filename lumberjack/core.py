@@ -3,7 +3,7 @@ from libstasis import Registry
 from libstasis.entities import IAspects
 from libstasis.entities import Entities
 from libstasis.entities import Column, types
-from libstasis.rst import AspectsForRstFile, RstFile
+from libstasis.rst import RstFile
 from libstasis.walker import File
 from zope.interface import implements
 from os import path
@@ -14,7 +14,7 @@ def factory(config, path):
     site['config'] = config
     site['path'] = path
     site.registerAdapter(AspectsForFile, (File,), IAspects)
-    site.registerAdapter(AspectsForRstFile, (RstFile,), IAspects)
+    site.registerAdapter(AspectsForRstFile, (File,), IExtraAspects)
     entities = Entities(registry=site)
     # basic file aspects
     entities.add_aspect('filepath', Column('value', types.Unicode))
@@ -27,6 +27,13 @@ def factory(config, path):
     # ReST aspects TODO: factor into module?
     site['entities'] = entities
     return site
+
+
+from zope.interface import Interface
+
+
+class IExtraAspects(Interface):
+    pass
 
 
 class AspectsForFile(propdict):
@@ -49,7 +56,19 @@ class AspectsForFile(propdict):
         """
         return path.join(self.basepath, self.subpath)
 
+    def __init__(self, file=None, site=None):
+        if file is not None:
+            # we're called as adapter
+            self.update(file.__dict__)
+            for name, aspect in file.site.getAdapters((file,), IExtraAspects):
+                self.update(aspect)
+
+
+class AspectsForRstFile(propdict):
+
     def __init__(self, file=None):
         if file is not None:
-            self.update(file.__dict__)
-        self.title = u'Welcome'
+            # we're called as adapter
+            rest_aspects = RstFile(file)
+            # TODO: self.update(rest_aspects) should work. bug in propdict?
+            self.update(rest_aspects.__dict__)

@@ -9,6 +9,11 @@ def test_parse(site):
 
 
 @example_dir('simple_rest')
+def test_parse_rest_metadata(site):
+    assert site['entities'].query('title')[0].title.value == 'Welcome'
+
+
+@example_dir('simple_rest')
 def test_render(site, example):
     xfail('not yet implemented')
     render_site(site,

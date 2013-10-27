@@ -62,7 +62,10 @@ class AspectsForFile(propdict):
             # i.e. index.html
             self.path.filename = path.split(file.subpath)[1]
             # i.e. html
-            self.path.extension = path.splitext(file.subpath)[1]
+            self.path.extension = path.splitext(file.subpath)[1].lower()
+
+            # hack: inject the path propdict for convenience
+            file.path = self.path
 
             # collect additional aspects from registered adapters
             for name, aspect in file.site.getAdapters((file,), IExtraAspects):
@@ -74,6 +77,6 @@ class AspectsForRstFile(propdict):
     def __init__(self, file=None):
         if file is not None:
             # we're called as adapter
-            rest_aspects = RstFile(file)
-            # TODO: self.update(rest_aspects) should work. bug in propdict?
-            self.update(rest_aspects.__dict__)
+            if file.path.extension in ['.rst', '.rest']:
+                # TODO: self.update(rest_aspects) should work. bug in propdict?
+                self.update(RstFile(file).__dict__)

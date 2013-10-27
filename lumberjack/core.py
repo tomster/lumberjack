@@ -17,11 +17,14 @@ def factory(config, path):
     site.registerAdapter(AspectsForRstFile, (File,), IExtraAspects)
     entities = Entities(registry=site)
     # basic file aspects
-    entities.add_aspect('filepath', Column('value', types.Unicode))
-    entities.add_aspect('basepath', Column('value', types.Unicode))
-    entities.add_aspect('subpath', Column('value', types.Unicode))
-    entities.add_aspect('localpath', Column('value', types.Unicode))
-    entities.add_aspect('filename', Column('value', types.Unicode))
+    entities.add_aspect('path',
+        Column('absolute', types.Unicode),
+        Column('base', types.Unicode),
+        Column('sub', types.Unicode),
+        Column('local', types.Unicode),
+        Column('filename', types.Unicode),
+        Column('extension', types.Unicode),
+    )
     # General meta data
     entities.add_aspect('title', Column('value', types.Unicode))
     entities.add_aspect('metadata',
@@ -44,27 +47,24 @@ class IExtraAspects(Interface):
 class AspectsForFile(propdict):
     implements(IAspects)
 
-    @property
-    def filename(self):
-        return path.split(self.subpath)[1]
-
-    @property
-    def localpath(self):
-        """ returns the path within the source directory,
-        without the filename
-        """
-        return path.split(self.subpath)[0]
-
-    @property
-    def filepath(self):
-        """ returns the absolute path, including the filename
-        """
-        return path.join(self.basepath, self.subpath)
-
-    def __init__(self, file=None, site=None):
-        if file is not None:
+    def __init__(self, file=None):
+        if file is not None and not isinstance(file, propdict):
             # we're called as adapter
-            self.update(file.__dict__)
+
+            # init the path(s)
+            self.path = propdict()
+            self.path.absolute = file.filepath
+            self.path.base = file.basepath
+            # i.e. foo/bar/index.html
+            self.path.sub = file.subpath
+            # i.e. foo/bar/
+            self.path.local = path.split(file.subpath)[0]
+            # i.e. index.html
+            self.path.filename = path.split(file.subpath)[1]
+            # i.e. html
+            self.path.extension = path.splitext(file.subpath)[1]
+
+            # collect additional aspects from registered adapters
             for name, aspect in file.site.getAdapters((file,), IExtraAspects):
                 self.update(aspect)
 

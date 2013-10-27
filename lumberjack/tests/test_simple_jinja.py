@@ -4,7 +4,7 @@ from lumberjack.testing import example_dir
 
 @example_dir('simple_jinja')
 def test_parse(site):
-    assert site['entities'].query('filename')[0].filename.value == 'index.html'
+    assert site['entities'].query('path')[0].path.filename == 'index.html'
 
 
 @example_dir('simple_jinja')

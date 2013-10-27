@@ -6,7 +6,7 @@ from lumberjack.testing import example_dir
 
 @example_dir('simple_rest')
 def test_parse(site):
-    assert site['entities'].query('filename')[0].filename.value == 'index.rst'
+    assert site['entities'].query('path')[0].path.filename == 'index.rst'
 
 
 @example_dir('simple_rest')
